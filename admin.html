@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin Dashboard - Zanko Cleaning</title>
+        <link rel="stylesheet" href="styles.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </head>
+
+    <body>
+        <!-- Login Modal -->
+        <div id="loginModal" class="modal active">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-user-shield"></i> Administrator Login</h2>
+                </div>
+                <form id="adminLoginForm">
+                    <div class="form-group">
+                        <label for="loginAdminEmail">Email</label>
+                        <input type="email" id="loginAdminEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginAdminPassword">Password</label>
+                        <input type="password" id="loginAdminPassword" required>
+                    </div>
+                    <div class="form-group remember-me">
+                        <label for="rememberMeAdmin">Remember Me</label>
+                        <input type="checkbox" id="rememberMeAdmin" style="width: auto; height: auto;">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <div class="login-footer">
+                        <a href="index.html">← Back to Home</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div id="dashboard" class="dashboard hidden">
+            <nav class="sidebar">
+                <div class="sidebar-header">
+                    <h2><i class="fas fa-tooth"></i> Zanko Admin</h2>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link active" data-section="overview"><i class="fas fa-chart-pie"></i>
+                            Overview</a></li>
+                    <li><a href="#" class="nav-link" data-section="admins"><i class="fas fa-user-shield"></i> Admins</a>
+                    </li>
+                    <li><a href="#" class="nav-link" data-section="doctors"><i class="fas fa-user-md"></i> Doctors</a>
+                    </li>
+                    <li><a href="#" class="nav-link" data-section="patients"><i class="fas fa-users"></i> Patients</a>
+                    </li>
+                    <li><a href="#" class="nav-link" data-section="appointments"><i class="fas fa-calendar-alt"></i>
+                            Appointments</a></li>
+                    <li><a href="#" class="nav-link" data-section="reminders"><i class="fas fa-bell"></i> Reminders</a>
+                    </li>
+                    <li><a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+
+            <main class="main-content">
+                <header class="content-header">
+                    <button class="mobile-menu-btn" id="adminMenuBtn"><i class="fas fa-bars"></i></button>
+                    <h1 id="pageTitle">Dashboard Overview</h1>
+                    <div class="header-actions">
+                        <div class="notification-bell">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-count" id="notificationCount">0</span>
+                        </div>
+                        <span class="admin-name">Welcome, Admin</span>
+                    </div>
+                </header>
+
+                <!-- Overview Section -->
+                <section id="overview" class="content-section active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-user-shield"></i></div>
+                            <div class="stat-info">
+                                <h3 id="totalAdmins">0</h3>
+                                <p>Total Admins</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-user-md"></i></div>
+                            <div class="stat-info">
+                                <h3 id="totalDoctors">0</h3>
+                                <p>Total Doctors</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-users"></i></div>
+                            <div class="stat-info">
+                                <h3 id="totalPatients">0</h3>
+                                <p>Total Patients</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                            <div class="stat-info">
+                                <h3 id="todayAppointments">0</h3>
+                                <p>Today's Appointments</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+                            <div class="stat-info">
+                                <h3 id="totalRevenue">$0</h3>
+                                <p>Total Revenue</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
+                            <div class="stat-info">
+                                <h3 id="totalRevenueIQD">د.ع 0</h3>
+                                <p>Total Revenue (IQD)</p>
+                            </div>
+                        </div>
+                        <!-- Total Earn Cards -->
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                            <div class="stat-info">
+                                <h3 id="totalEarnUSD">$0</h3>
+                                <p>Total Earn (USD)</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-hand-holding"></i></div>
+                            <div class="stat-info">
+                                <h3 id="totalEarnIQD">د.ع 0</h3>
+                                <p>Total Earn (IQD)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-activities">
+                        <h3>Recent Activities</h3>
+                        <div id="recentActivities" class="activity-list">
+                            <!-- Activities will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Admins Section -->
+                <section id="admins" class="content-section">
+                    <div class="section-header">
+                        <h2>Manage Admins</h2>
+                        <button class="btn btn-primary" onclick="openAddAdminModal()">
+                            <i class="fas fa-plus"></i> Add Admin
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table id="adminsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminsTableBody">
+                                <!-- Admins will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Doctors Section -->
+                <section id="doctors" class="content-section">
+                    <div class="section-header">
+                        <h2>Manage Doctors</h2>
+                        <button class="btn btn-primary" onclick="openAddDoctorModal()">
+                            <i class="fas fa-plus"></i> Add Doctor
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table id="doctorsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="doctorsTableBody">
+                                <!-- Doctors will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Patients Section -->
+                <section id="patients" class="content-section">
+                    <div class="section-header">
+                        <h2>Manage Patients</h2>
+                        <div class="header-controls">
+                            <div class="search-box">
+                                <input type="text" id="patientSearch"
+                                    placeholder="Search patients by name or phone number...">
+                                <i class="fas fa-search"></i>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="clearPatientSearch()"
+                                    title="Clear search">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="filter-controls">
+                                <select id="paymentStatusFilter" onchange="applyPatientFilters()">
+                                    <option value="all">All Patients</option>
+                                    <option value="paid">Paid in Full</option>
+                                    <option value="remaining">Has Remaining</option>
+                                    <option value="not_paid">Not Paid Yet</option>
+                                </select>
+                                <!-- Filter by doctor -->
+                                <select id="patientDoctorFilter" onchange="applyPatientFilters()">
+                                    <option value="all">All Doctors</option>
+                                </select>
+                                <select id="sortOrderFilter" onchange="applyPatientFilters()">
+                                    <option value="name">Sort by Name</option>
+                                    <option value="id">Sort by ID</option>
+                                    <option value="dollar">Sort by Dollar</option>
+                                    <option value="dinar">Sort by Dinar</option>
+                                    <option value="remaining_desc">Sort by Remaining (High to Low)</option>
+                                    <option value="remaining_asc">Sort by Remaining (Low to High)</option>
+                                </select>
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                    onclick="clearAllPatientFilters()" title="Clear all filters">
+                                    <i class="fas fa-filter"></i> Clear Filters
+                                </button>
+                            </div>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="exportPatientsData()"
+                                title="Export to Excel">
+                                <i class="fas fa-file-export"></i> Export
+                            </button>
+                            <button class="btn btn-primary" onclick="openAddPatientModal()">
+                                <i class="fas fa-plus"></i> Add Patient
+                            </button>
+                            <button class="btn btn-success" onclick="openAddAppointmentModal()">
+                                <i class="fas fa-calendar-plus"></i> Schedule Appointment
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table id="patientsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Full Name</th>
+                                    <th>Phone</th>
+                                    <th>Case</th>
+                                    <th>Assigned Doctor</th>
+                                    <th>Total Cost</th>
+                                    <th>Remaining</th>
+                                    <th>Note</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="patientsTableBody">
+                                <!-- Patients will be loaded here -->
+                                <!-- Patient Note Modal -->
+                                <div id="patientNoteModal" class="modal" style="display:none;">
+                                    <div class="modal-content">
+                                        <span class="close" onclick="closePatientNoteModal()">&times;</span>
+                                        <h3 id="patientNoteModalTitle">Patient Note</h3>
+                                        <textarea id="patientNoteTextarea" rows="6" style="width:100%;"></textarea>
+                                        <div style="margin-top:10px; text-align:right;">
+                                            <button class="btn btn-primary" onclick="savePatientNote()">Save</button>
+                                        </div>
+                                        <div id="patientNoteStatus" style="margin-top:8px;"></div>
+                                    </div>
+                                </div>
+                                <!-- Implant Information Modal -->
+                                <div id="implantInfoModal" class="modal" style="display:none;">
+                                    <div class="modal-content">
+                                        <span class="close" onclick="closeImplantInfoModal()">&times;</span>
+                                        <h3 id="implantInfoModalTitle">Implant Information</h3>
+                                        <div class="form-group">
+                                            <label for="implantBrandInput">Implant Brand</label>
+                                            <input type="text" id="implantBrandInput" class="form-control"
+                                                placeholder="Enter implant brand">
+                                            <span id="implantBrandDisplay" class="form-control"
+                                                style="display:none;background:#f5f5f5;"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="implantFormerInput">Former</label>
+                                            <input type="text" id="implantFormerInput" class="form-control"
+                                                placeholder="Enter former">
+                                            <span id="implantFormerDisplay" class="form-control"
+                                                style="display:none;background:#f5f5f5;"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="implantCrownTypeInput">Crown Type</label>
+                                            <input type="text" id="implantCrownTypeInput" class="form-control"
+                                                placeholder="Enter crown type">
+                                            <span id="implantCrownTypeDisplay" class="form-control"
+                                                style="display:none;background:#f5f5f5;"></span>
+                                        </div>
+                                        <div style="margin-top:10px; text-align:right;">
+                                            <button id="implantInfoSaveBtn" class="btn btn-primary"
+                                                onclick="saveImplantInfo()">Save</button>
+                                        </div>
+                                        <div id="implantInfoStatus" style="margin-top:8px;"></div>
+                                    </div>
+                                </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Appointments Section -->
+                <section id="appointments" class="content-section">
+                    <div class="section-header">
+                        <h2>Manage Appointments</h2>
+                        <div class="filter-controls">
+                            <select id="appointmentDoctorFilter" onchange="applyAppointmentFilters()">
+                                <option value="all">All Doctors</option>
+                            </select>
+                            <input type="date" id="appointmentDateFilter" onchange="applyAppointmentFilters()">
+                            <input type="time" id="appointmentTimeFilter" onchange="applyAppointmentFilters()">
+                            <!-- Quick date range filters -->
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                onclick="setAppointmentDateRange('today')">Today</button>
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                onclick="setAppointmentDateRange('this_week')">This Week</button>
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                onclick="setAppointmentDateRange('next_week')">Next Week</button>
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                onclick="setAppointmentDateRange('this_month')">This Month</button>
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                onclick="setAppointmentDateRange('next_month')">Next Month</button>
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="clearAppointmentFilters()"
+                                title="Clear filters">
+                                <i class="fas fa-filter"></i> Clear Filters
+                            </button>
+                        </div>
+                        <button class="btn btn-primary" onclick="openAddAppointmentModal()">
+                            <i class="fas fa-plus"></i> Schedule Appointment
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table id="appointmentsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Patient</th>
+                                    <th>Doctor</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointmentsTableBody">
+                                <!-- Appointments will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Reminders Section -->
+                <section id="reminders" class="content-section">
+                    <div class="section-header">
+                        <h2>Appointment Reminders</h2>
+                    </div>
+                    <div class="filter-controls reminders-filter">
+                        <input type="date" id="reminderDateFilter" onchange="applyReminderFilters()"
+                            title="Filter by Date">
+                        <input type="time" id="reminderTimeFilter" onchange="applyReminderFilters()"
+                            title="Filter by Time">
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            onclick="setReminderTimeRange('today')">Today</button>
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            onclick="setReminderTimeRange('week')">This Week</button>
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            onclick="setReminderTimeRange('month')">This Month</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="clearReminderFilters()">Clear
+                            Filters</button>
+                    </div>
+                    <div id="remindersList" class="reminders-container">
+                        <!-- Reminders will be loaded here -->
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Modals -->
+        <!-- Add Admin Modal -->
+        <div id="addAdminModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add New Admin</h3>
+                    <span class="close" onclick="closeModal('addAdminModal')">&times;</span>
+                </div>
+                <form id="addAdminForm">
+                    <div class="form-group">
+                        <label for="adminName">Admin Name</label>
+                        <input type="text" id="adminName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="adminEmail">Email</label>
+                        <input type="email" id="adminEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPassword">Password</label>
+                        <input type="password" id="adminPassword" required minlength="6">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary"
+                            onclick="closeModal('addAdminModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Admin</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Admin Modal -->
+        <div id="editAdminModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Admin</h3>
+                    <span class="close" onclick="closeModal('editAdminModal')">&times;</span>
+                </div>
+                <form id="editAdminForm">
+                    <input type="hidden" id="editAdminId">
+                    <div class="form-group">
+                        <label for="editAdminName">Admin Name</label>
+                        <input type="text" id="editAdminName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAdminEmail">Email</label>
+                        <input type="email" id="editAdminEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAdminPassword">Password (leave blank to keep current)</label>
+                        <input type="password" id="editAdminPassword" minlength="6">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary"
+                            onclick="closeModal('editAdminModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Admin</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Doctor Modal -->
+        <div id="addDoctorModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add New Doctor</h3>
+                    <span class="close" onclick="closeModal('addDoctorModal')">&times;</span>
+                </div>
+                <form id="addDoctorForm">
+                    <div class="form-group">
+                        <label for="doctorName">Doctor Name</label>
+                        <input type="text" id="doctorName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="doctorEmail">Email</label>
+                        <input type="email" id="doctorEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="doctorPassword">Password</label>
+                        <input type="password" id="doctorPassword" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary"
+                            onclick="closeModal('addDoctorModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Doctor</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Patient Modal -->
+        <div id="addPatientModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add New Patient</h3>
+                    <span class="close" onclick="closeModal('addPatientModal')">&times;</span>
+                </div>
+                <form id="addPatientForm">
+                    <div class="form-group">
+                        <label for="patientFullName">Full Name</label>
+                        <input type="text" id="patientFullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientPhone">Phone Number</label>
+                        <input type="tel" id="patientPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientProblem">Case(s)</label>
+                        <select id="patientProblem" multiple size="4" required>
+                            <option value="">Select Case</option>
+                            <option value="Cleaning">Cleaning</option>
+                            <option value="Filling">Filling</option>
+                            <option value="Root Canal">Root Canal</option>
+                            <option value="Extraction">Extraction</option>
+                            <option value="Orthodontics">Orthodontics</option>
+                            <option value="Crown">Crown</option>
+                            <option value="Implant">Implant</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <!-- Input for custom case when 'Other' is selected -->
+                    </div>
+                    <div class="form-group" id="patientProblemOtherGroup" style="display:none;">
+                        <label for="patientProblemOther">Specify Case</label>
+                        <input type="text" id="patientProblemOther" placeholder="Enter case...">
+                    </div>
+                    <!-- Implant additional options -->
+                    <div class="form-group implant-details hidden" id="implantBrandGroup">
+                        <label for="implantBrand">Implant Brand</label>
+                        <select id="implantBrand">
+                            <option value="JD">JD</option>
+                            <option value="Dentis">Dentis</option>
+                            <option value="Brad">Brad</option>
+                            <option value="Maco">Maco</option>
+                        </select>
+                    </div>
+                    <div class="form-group implant-details hidden" id="implantFormerGroup">
+                        <label for="implantFormer">Former</label>
+                        <select id="implantFormer">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group implant-details hidden" id="implantCrownGroup">
+                        <label for="implantCrownType">Crown Type</label>
+                        <select id="implantCrownType">
+                            <option value="Screw">Screw Type</option>
+                            <option value="Cementation">Cementation</option>
+                        </select>
+                    </div>
+                    <!-- Existing fields continue -->
+                    <div class="form-group">
+                        <label for="assignedDoctor">Assigned Doctor</label>
+                        <select id="assignedDoctor" required>
+                            <option value="">Select Doctor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientCurrency">Currency</label>
+                        <select id="patientCurrency">
+                            <option value="USD">USD ($)</option>
+                            <option value="IQD">IQD (د.ع)</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="totalCost">Total Cost ($)</label>
+                            <input type="number" id="totalCost" min="0" step="0.01" required
+                                onchange="updateRemainingAmount()">
+                        </div>
+                        <div class="form-group">
+                            <label for="patientPaymentStatus">Payment Status</label>
+                            <select id="patientPaymentStatus" onchange="updateRemainingAmount()" required>
+                                <option value="">Select Payment Status</option>
+                                <option value="not_paid">Not Paid Yet</option>
+                                <option value="partial">Partial Payment</option>
+                                <option value="paid">Paid in Full</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="remainingAmount">Remaining Amount ($)</label>
+                        <input type="number" id="remainingAmount" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary"
+                            onclick="closeModal('addPatientModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Patient</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Appointment Modal -->
+        <div id="addAppointmentModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Schedule New Appointment</h3>
+                    <span class="close" onclick="closeModal('addAppointmentModal')">&times;</span>
+                </div>
+                <form id="addAppointmentForm">
+                    <div class="form-group">
+                        <label for="appointmentPatientSearch">Search and Select Patient</label>
+                        <div class="autocomplete-container">
+                            <input type="text" id="appointmentPatientSearch"
+                                placeholder="Search by name or phone number..." autocomplete="off">
+                            <input type="hidden" id="appointmentPatient" required>
+                            <div id="appointmentPatientDropdown" class="autocomplete-dropdown"></div>
+                        </div>
+                        <small class="form-hint">Type to search for patients by name or phone number</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointmentDoctor">Doctor</label>
+                        <select id="appointmentDoctor" required>
+                            <option value="">Select Doctor</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="appointmentDate">Date</label>
+                            <input type="date" id="appointmentDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentTime">Time</label>
+                            <input type="time" id="appointmentTime" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary"
+                            onclick="closeModal('addAppointmentModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Schedule Appointment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Doctor Modal -->
+        <div id="editDoctorModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Doctor</h3>
+                    <span class="close" onclick="closeModal('editDoctorModal')">&times;</span>
+                </div>
+                <form id="editDoctorForm">
+                    <input type="hidden" id="editDoctorId">
+                    <div class="form-group">
+                        <label for="editDoctorName">Doctor Name</label>
+                        <input type="text" id="editDoctorName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDoctorEmail">Email</label>
+                        <input type="email" id="editDoctorEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editDoctorPassword">New Password (leave blank to keep current)</label>
+                        <input type="password" id="editDoctorPassword" placeholder="Enter new password or leave blank">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary"
+                            onclick="closeModal('editDoctorModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Doctor</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Patient Modal -->
+        <div id="editPatientModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Patient</h3>
+                    <span class="close" onclick="closeModal('editPatientModal')">&times;</span>
+                </div>
+                <form id="editPatientForm">
+                    <input type="hidden" id="editPatientId">
+                    <div class="form-group">
+                        <label for="editPatientFullName">Full Name</label>
+                        <input type="text" id="editPatientFullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPatientPhone">Phone Number</label>
+                        <input type="tel" id="editPatientPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPatientProblem">Case(s)</label>
+                        <select id="editPatientProblem" multiple size="4" required>
+                            <option value="">Select Case</option>
+                            <option value="Cleaning">Cleaning</option>
+                            <option value="Filling">Filling</option>
+                            <option value="Root Canal">Root Canal</option>
+                            <option value="Extraction">Extraction</option>
+                            <option value="Orthodontics">Orthodontics</option>
+                            <option value="Crown">Crown</option>
+                            <option value="Implant">Implant</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="editPatientProblemOtherGroup" style="display:none;">
+                        <label for="editPatientProblemOther">Specify Case</label>
+                        <input type="text" id="editPatientProblemOther" placeholder="Enter case...">
+                    </div>
+                    <div class="form-group implant-details hidden" id="editImplantBrandGroup">
+                        <label for="editImplantBrand">Implant Brand</label>
+                        <select id="editImplantBrand">
+                            <option value="JD">JD</option>
+                            <option value="Dentis">Dentis</option>
+                            <option value="Brad">Brad</option>
+                            <option value="Maco">Maco</option>
+                        </select>
+                    </div>
+                    <div class="form-group implant-details hidden" id="editImplantFormerGroup">
+                        <label for="editImplantFormer">Former</label>
+                        <select id="editImplantFormer">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group implant-details hidden" id="editImplantCrownGroup">
+                        <label for="editImplantCrownType">Crown Type</label>
+                        <select id="editImplantCrownType">
+                            <option value="Screw">Screw Type</option>
+                            <option value="Cementation">Cementation</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAssignedDoctor">Assigned Doctor</label>
+                        <select id="editAssignedDoctor" required>
+                            <option value="">Select Doctor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPatientCurrency">Currency</label>
+                        <select id="editPatientCurrency">
+                            <option value="USD">USD ($)</option>
+                            <option value="IQD">IQD (د.ع)</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editTotalCost">Total Cost ($)</label>
+                            <input type="number" id="editTotalCost" min="0" step="0.01" required
+                                onchange="updateEditRemainingAmount()">
+                        </div>
+                        <div class="form-group">
+                            <label for="editPatientPaymentStatus">Payment Status</label>
+                            <select id="editPatientPaymentStatus" onchange="updateEditRemainingAmount()" required>
+                                <option value="">Select Payment Status</option>
+                                <option value="not_paid">Not Paid Yet</option>
+                                <option value="partial">Partial Payment</option>
+                                <option value="paid">Paid in Full</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editRemainingAmount">Remaining Amount ($)</label>
+                        <input type="number" id="editRemainingAmount" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary"
+                            onclick="closeModal('editPatientModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Patient</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Appointment Modal -->
+        <div id="editAppointmentModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Appointment</h3>
+                    <span class="close" onclick="closeModal('editAppointmentModal')">&times;</span>
+                </div>
+                <form id="editAppointmentForm">
+                    <input type="hidden" id="editAppointmentId">
+                    <input type="hidden" id="editAppointmentPatient"> <!-- Preserve patient ID when editing -->
+                    <div class="form-group">
+                        <label for="editAppointmentDoctor">Doctor</label>
+                        <select id="editAppointmentDoctor" required>
+                            <option value="">Select Doctor</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editAppointmentDate">Date</label>
+                            <input type="date" id="editAppointmentDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editAppointmentTime">Time</label>
+                            <input type="time" id="editAppointmentTime" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary"
+                            onclick="closeModal('editAppointmentModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Update Appointment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Notification Toast -->
+        <div id="notificationToast" class="notification-toast">
+            <div class="toast-content">
+                <i class="fas fa-bell"></i>
+                <span id="toastMessage"></span>
+            </div>
+        </div>
+
+        <!-- Excel export library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+        <script src="app.js"></script>
+        <script>
+            // Mobile sidebar toggle with outside click to close
+            const adminMenuBtn = document.getElementById('adminMenuBtn');
+            const adminSidebar = document.querySelector('.sidebar');
+            adminMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                adminSidebar.classList.toggle('active');
+            });
+            document.addEventListener('click', (e) => {
+                if (!adminSidebar.contains(e.target) && !adminMenuBtn.contains(e.target)) {
+                    adminSidebar.classList.remove('active');
+                }
+            });
+        </script>
+    </body>
+
+</html>

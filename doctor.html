@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Doctor Dashboard - Zanko Cleaning</title>
+        <link rel="stylesheet" href="styles.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </head>
+
+    <body>
+        <!-- Login Modal -->
+        <div id="loginModal" class="modal active">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-user-md"></i> Doctor Login</h2>
+                </div>
+                <form id="doctorLoginForm">
+                    <div class="form-group">
+                        <label for="doctorEmail">Email</label>
+                        <input type="email" id="doctorEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="doctorPassword">Password</label>
+                        <input type="password" id="doctorPassword" required>
+                    </div>
+                    <div class="form-group remember-me">
+                        <label for="rememberMeDoctor">Remember Me</label>
+                        <input type="checkbox" id="rememberMeDoctor" style="width: auto; height: auto;">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <div class="login-footer">
+                        <a href="index.html">← Back to Home</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div id="dashboard" class="dashboard hidden">
+            <nav class="sidebar doctor-sidebar">
+                <div class="sidebar-header">
+                    <h2><i class="fas fa-tooth"></i> Zanko Doctor</h2>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link active" data-section="overview"><i class="fas fa-chart-pie"></i>
+                            Overview</a></li>
+                    <li><a href="#" class="nav-link" data-section="today-appointments"><i
+                                class="fas fa-calendar-day"></i> Today's Schedule</a></li>
+                    <li><a href="#" class="nav-link" data-section="all-appointments"><i class="fas fa-calendar-alt"></i>
+                            All Appointments</a></li>
+                    <li><a href="#" class="nav-link" data-section="patients"><i class="fas fa-users"></i> My
+                            Patients</a></li>
+                    <li><a href="#" class="nav-link" data-section="reminders"><i class="fas fa-bell"></i> Reminders</a>
+                    </li>
+                    <li><a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+
+            <main class="main-content">
+                <header class="content-header">
+                    <button class="mobile-menu-btn" id="doctorMenuBtn"><i class="fas fa-bars"></i></button>
+                    <h1 id="pageTitle">Doctor Dashboard</h1>
+                    <div class="header-actions">
+                        <div class="notification-bell">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-count" id="notificationCount">0</span>
+                        </div>
+                        <span class="doctor-name" id="doctorName">Welcome, Doctor</span>
+                    </div>
+                </header>
+
+                <!-- Overview Section -->
+                <section id="overview" class="content-section active">
+                    <div class="welcome-card">
+                        <h2>Welcome back, <span id="doctorNameWelcome">Doctor</span>!</h2>
+                        <p>Here's your practice overview for today</p>
+                    </div>
+
+                    <div class="stats-grid doctor-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                            <div class="stat-info">
+                                <h3 id="todayAppointmentsCount">0</h3>
+                                <p>Today's Appointments</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-users"></i></div>
+                            <div class="stat-info">
+                                <h3 id="totalPatientsCount">0</h3>
+                                <p>My Patients</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                            <div class="stat-info">
+                                <h3 id="nextAppointmentTime">--:--</h3>
+                                <p>Next Appointment</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+                            <div class="stat-info">
+                                <h3 id="pendingPaymentsUSD">0</h3>
+                                <p>Pending Payments (USD)</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
+                            <div class="stat-info">
+                                <h3 id="pendingPaymentsIQD">0</h3>
+                                <p>Pending Payments (IQD)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <h3>Quick Actions</h3>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="showSection('today-appointments')">
+                                <i class="fas fa-calendar-day"></i>
+                                <span>View Today's Schedule</span>
+                            </button>
+                            <button class="action-btn" onclick="showSection('patients')">
+                                <i class="fas fa-users"></i>
+                                <span>My Patients</span>
+                            </button>
+                            <button class="action-btn" onclick="showSection('all-appointments')">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>All Appointments</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Today's Appointments Section -->
+                <section id="today-appointments" class="content-section">
+                    <div class="section-header">
+                        <h2>Today's Schedule</h2>
+                        <div class="date-display">
+                            <i class="fas fa-calendar"></i>
+                            <span id="currentDate"></span>
+                        </div>
+                    </div>
+
+                    <div class="appointments-timeline">
+                        <div id="todayAppointmentsList" class="timeline-container">
+                            <!-- Today's appointments will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- All Appointments Section -->
+                <section id="all-appointments" class="content-section">
+                    <div class="section-header">
+                        <h2>All My Appointments</h2>
+                        <div class="date-filter">
+                            <input type="date" id="appointmentDateFilter" placeholder="Filter by date">
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table id="allAppointmentsTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Patient</th>
+                                    <th>Case</th>
+                                    <th>Payment Status</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allAppointmentsTableBody">
+                                <!-- All appointments will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Patients Section -->
+                <section id="patients" class="content-section">
+                    <div class="section-header">
+                        <h2>My Patients</h2>
+                        <div class="header-controls">
+                            <div class="search-box">
+                                <input type="text" id="patientSearchDoctor"
+                                    placeholder="Search my patients by name or phone...">
+                                <i class="fas fa-search"></i>
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                    onclick="clearDoctorPatientSearch()" title="Clear search">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="filter-controls">
+                                <select id="doctorPaymentStatusFilter" onchange="applyDoctorPatientFilters()">
+                                    <option value="all">All Patients</option>
+                                    <option value="paid">Paid in Full</option>
+                                    <option value="remaining">Has Remaining</option>
+                                    <option value="not_paid">Not Paid Yet</option>
+                                </select>
+                                <select id="doctorSortOrderFilter" onchange="applyDoctorPatientFilters()">
+                                    <option value="name">Sort by Name</option>
+                                    <option value="id">Sort by ID</option>
+                                    <option value="remaining_desc">Sort by Remaining (High to Low)</option>
+                                    <option value="remaining_asc">Sort by Remaining (Low to High)</option>
+                                </select>
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                    onclick="clearAllDoctorPatientFilters()" title="Clear all filters">
+                                    <i class="fas fa-filter"></i> Clear Filters
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="patients-grid" id="patientsGrid">
+                        <!-- Patients will be loaded here -->
+                    </div>
+                </section>
+
+                <!-- Reminders Section -->
+                <section id="reminders" class="content-section">
+                    <div class="section-header">
+                        <h2>Appointment Reminders</h2>
+                    </div>
+                    <div class="filter-controls reminders-filter">
+                        <input type="date" id="reminderDateFilter" onchange="applyReminderFilters()"
+                            title="Filter by Date">
+                        <input type="time" id="reminderTimeFilter" onchange="applyReminderFilters()"
+                            title="Filter by Time">
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            onclick="setReminderTimeRange('today')">Today</button>
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            onclick="setReminderTimeRange('week')">This Week</button>
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            onclick="setReminderTimeRange('month')">This Month</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="clearReminderFilters()">Clear
+                            Filters</button>
+                    </div>
+                    <div id="remindersList" class="reminders-container">
+                        <!-- Reminders will be loaded here -->
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Patient Details Modal -->
+        <div id="patientDetailsModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Patient Details</h3>
+                    <span class="close" onclick="closeModal('patientDetailsModal')">&times;</span>
+                </div>
+                <div class="patient-details-content">
+                    <div class="patient-info">
+                        <div class="info-row">
+                            <label>Full Name:</label>
+                            <span id="modalPatientName"></span>
+                        </div>
+                        <div class="info-row">
+                            <label>Phone:</label>
+                            <span id="modalPatientPhone"></span>
+                        </div>
+                        <div class="info-row">
+                            <label>Case:</label>
+                            <span id="modalPatientProblem"></span>
+                        </div>
+                        <div class="info-row">
+                            <label>Total Treatment Cost:</label>
+                            <span id="modalPatientTotalCost"></span>
+                        </div>
+                        <div class="info-row">
+                            <label>Remaining Amount:</label>
+                            <span id="modalPatientRemaining" class="remaining-amount"></span>
+                        </div>
+                        <div class="info-row">
+                            <label>Payment Status:</label>
+                            <span id="modalPaymentStatus" class="payment-status"></span>
+                        </div>
+                    </div>
+                    <div class="patient-appointments">
+                        <h4>Upcoming Appointments</h4>
+                        <div id="modalPatientAppointments" class="appointments-list">
+                            <!-- Patient appointments will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Toast -->
+        <div id="notificationToast" class="notification-toast">
+            <div class="toast-content">
+                <i class="fas fa-bell"></i>
+                <span id="toastMessage"></span>
+            </div>
+        </div>
+
+        <script src="app.js"></script>
+        <script>
+            // Mobile sidebar toggle with outside click to close
+            const docMenuBtn = document.getElementById('doctorMenuBtn');
+            const docSidebar = document.querySelector('.doctor-sidebar');
+            docMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                docSidebar.classList.toggle('active');
+            });
+            document.addEventListener('click', (e) => {
+                if (!docSidebar.contains(e.target) && !docMenuBtn.contains(e.target)) {
+                    docSidebar.classList.remove('active');
+                }
+            });
+        </script>
+    </body>
+
+</html>

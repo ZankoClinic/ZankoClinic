@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zanko Clinic - Dental Clinic Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="landing-container">
+        <div class="background-animation"></div>
+
+        <header class="landing-header">
+            <div class="logo-container">
+                <i class="fas fa-tooth"></i>
+                <h1>Zanko Clinic</h1>
+            </div>
+            <p class="subtitle">Dental Clinic Management System</p>
+        </header>
+
+        <main class="landing-main">
+            <div class="welcome-section">
+                <h2>Welcome to Your Dental Practice</h2>
+                <p>Streamline your clinic operations with our comprehensive management system</p>
+            </div>
+
+            <div class="login-options">
+                <div class="login-card admin-card">
+                    <div class="card-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3>Administrator</h3>
+                    <p>Manage doctors, patients, and appointments</p>
+                    <button class="login-btn admin-btn" onclick="window.location.href='admin.html'">
+                        <span>Login as Admin</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="login-card doctor-card">
+                    <div class="card-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Doctor</h3>
+                    <p>View appointments and patient information</p>
+                    <button class="login-btn doctor-btn" onclick="window.location.href='doctor.html'">
+                        <span>Login as Doctor</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="features-section">
+                <h3>Key Features</h3>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Appointment Scheduling</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-users"></i>
+                        <span>Patient Management</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-bell"></i>
+                        <span>Smart Reminders</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Mobile Friendly</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="landing-footer">
+            <p>&copy; 2025 Zanko Clinic. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
