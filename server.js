@@ -14,7 +14,9 @@ const PORT = process.env.PORT || 3000;
 
 // ===== MIDDLEWARE =====
 app.use(cors({
-    origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+    origin: process.env.NODE_ENV === 'production'
+        ? [process.env.FRONTEND_URL || 'https://your-app.railway.app']
+        : ['http://localhost:3000', 'http://127.0.0.1:3000'],
     credentials: true
 }));
 
@@ -28,7 +30,7 @@ app.use(session({
     rolling: true, // Refresh session on activity
     name: 'zanko.session',
     cookie: {
-        secure: false,
+        secure: process.env.NODE_ENV === 'production',
         httpOnly: true,
         maxAge: 8 * 60 * 60 * 1000, // 8 hours (increased from 24 hours for better UX)
         sameSite: 'lax' // Important for cross-origin requests
